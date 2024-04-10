@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="200" id="cxv-Gj-KRy" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="200" id="cxv-Gj-KRy" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cxv-Gj-KRy" id="hPg-Q5-1SN">
@@ -46,19 +46,27 @@
                                                     <state key="normal" image="Active"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jl0-AO-lK4">
-                                                    <rect key="frame" x="20" y="179" width="102" height="16"/>
+                                                    <rect key="frame" x="24" y="172" width="102" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-ON-H3c">
+                                                    <rect key="frame" x="16" y="168" width="382" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </variation>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="TpC-qo-Lnm" firstAttribute="top" secondItem="hPg-Q5-1SN" secondAttribute="top" constant="4" id="6hS-70-uWB"/>
                                                 <constraint firstItem="TpC-qo-Lnm" firstAttribute="trailing" secondItem="rKn-FR-rOU" secondAttribute="trailing" id="ATo-iV-tK2"/>
                                                 <constraint firstAttribute="bottom" secondItem="TpC-qo-Lnm" secondAttribute="bottom" constant="4" id="Cr9-w2-cKH"/>
-                                                <constraint firstItem="Jl0-AO-lK4" firstAttribute="leading" secondItem="TpC-qo-Lnm" secondAttribute="leading" constant="4" id="PwK-fe-hfE"/>
+                                                <constraint firstItem="Jl0-AO-lK4" firstAttribute="leading" secondItem="TpC-qo-Lnm" secondAttribute="leading" constant="8" id="PwK-fe-hfE"/>
                                                 <constraint firstItem="rKn-FR-rOU" firstAttribute="top" secondItem="TpC-qo-Lnm" secondAttribute="top" id="Wg7-gn-PJM"/>
-                                                <constraint firstItem="TpC-qo-Lnm" firstAttribute="bottom" secondItem="Jl0-AO-lK4" secondAttribute="bottom" constant="1" id="a00-l5-hFk"/>
+                                                <constraint firstItem="TpC-qo-Lnm" firstAttribute="bottom" secondItem="Jl0-AO-lK4" secondAttribute="bottom" constant="8" id="a00-l5-hFk"/>
                                                 <constraint firstItem="TpC-qo-Lnm" firstAttribute="leading" secondItem="hPg-Q5-1SN" secondAttribute="leading" constant="16" id="bdB-9e-kcD"/>
                                                 <constraint firstAttribute="trailing" secondItem="TpC-qo-Lnm" secondAttribute="trailing" constant="16" id="rXa-qo-B6z"/>
                                                 <constraint firstItem="TpC-qo-Lnm" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Jl0-AO-lK4" secondAttribute="trailing" constant="20" id="yHM-7w-lPb"/>
@@ -67,6 +75,7 @@
                                         <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="dateLable" destination="Jl0-AO-lK4" id="Baz-cP-sgJ"/>
+                                            <outlet property="gradientLayer" destination="zvh-ON-H3c" id="Hfe-UC-bjW"/>
                                             <outlet property="likeButton" destination="rKn-FR-rOU" id="IyS-bh-oeY"/>
                                             <outlet property="photo" destination="TpC-qo-Lnm" id="tvN-wr-fdI"/>
                                         </connections>
@@ -93,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.671755725190835" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="52.173913043478265" y="-34.821428571428569"/>
         </scene>
     </scenes>
     <resources>

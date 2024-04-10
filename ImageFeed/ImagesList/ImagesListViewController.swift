@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private lazy var dateFormatter: DateFormatter = {
@@ -16,10 +16,9 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-    
 
-    @IBOutlet weak var imageInCell: UIImageView!
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private weak var imageInCell: UIImageView!
+    @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +30,12 @@ class ImagesListViewController: UIViewController {
        guard let image = UIImage(named: photosName[indexPath.row]) else { return }
        cell.photo.image = image
        cell.dateLable.text = dateFormatter.string(from: Date())
-       
-       if indexPath.row % 2 == 0 {
-           cell.likeButton.setImage(UIImage(named: "Active"), for: .normal)
-       } else {
-           cell.likeButton.setImage(UIImage(named: "No Active"), for: .normal)
-       }
-       
+       let likeImage = UIImage(named: indexPath.row % 2 == 0 ? "Active" : "No Active")
+       cell.likeButton.setImage(likeImage, for: .normal)
    }
-
 }
 
+    // MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,7 +57,7 @@ extension ImagesListViewController: UITableViewDataSource {
     
     
 }
-
+   // MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -73,13 +67,11 @@ extension ImagesListViewController: UITableViewDelegate {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
         }
-        
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
         let scale = imageViewWidth / imageWidth
         let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
-    
     }
 }
