@@ -140,7 +140,7 @@
                                 <rect key="frame" x="0.0" y="-1" width="414" height="897"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="mnO-hU-4il">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="867"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
@@ -189,13 +189,13 @@
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="BnY-Nf-aXN" firstAttribute="leading" secondItem="Kct-Uv-8Cs" secondAttribute="leading" constant="8" id="RyC-R3-T8D"/>
-                            <constraint firstItem="Kct-Uv-8Cs" firstAttribute="bottom" secondItem="qOr-lh-i6r" secondAttribute="bottom" id="S6S-xE-XgR"/>
+                            <constraint firstAttribute="bottom" secondItem="qOr-lh-i6r" secondAttribute="bottom" id="S6S-xE-XgR"/>
                             <constraint firstItem="BnY-Nf-aXN" firstAttribute="top" secondItem="Kct-Uv-8Cs" secondAttribute="top" constant="4" id="Smg-Ho-GdQ"/>
                             <constraint firstItem="0JQ-Bs-Qfe" firstAttribute="centerX" secondItem="Kct-Uv-8Cs" secondAttribute="centerX" id="b0O-cN-Wkq"/>
-                            <constraint firstItem="qOr-lh-i6r" firstAttribute="top" secondItem="Kct-Uv-8Cs" secondAttribute="top" id="ful-rh-daG"/>
+                            <constraint firstItem="qOr-lh-i6r" firstAttribute="top" secondItem="kXc-re-pn6" secondAttribute="top" id="ful-rh-daG"/>
                             <constraint firstItem="Kct-Uv-8Cs" firstAttribute="bottom" secondItem="0JQ-Bs-Qfe" secondAttribute="bottom" constant="40" id="lHK-dL-zKq"/>
-                            <constraint firstItem="Kct-Uv-8Cs" firstAttribute="trailing" secondItem="qOr-lh-i6r" secondAttribute="trailing" id="n8M-pZ-ozg"/>
-                            <constraint firstItem="qOr-lh-i6r" firstAttribute="leading" secondItem="Kct-Uv-8Cs" secondAttribute="leading" id="sb0-P3-k64"/>
+                            <constraint firstAttribute="trailing" secondItem="qOr-lh-i6r" secondAttribute="trailing" id="n8M-pZ-ozg"/>
+                            <constraint firstItem="qOr-lh-i6r" firstAttribute="leading" secondItem="kXc-re-pn6" secondAttribute="leading" id="sb0-P3-k64"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JWu-bZ-bCW"/>
