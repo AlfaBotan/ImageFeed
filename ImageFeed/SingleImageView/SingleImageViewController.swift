@@ -19,10 +19,10 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var sharingButton: UIButton!
-    @IBOutlet private  var scrollView: UIScrollView!
-    @IBOutlet private  var imageView: UIImageView!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var sharingButton: UIButton!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ final class SingleImageViewController: UIViewController {
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
     
-    @IBAction func didTapShareButton() {
+    @IBAction private func didTapShareButton() {
         guard let image else { return }
         let share = UIActivityViewController(
             activityItems: [image],
@@ -62,7 +62,7 @@ final class SingleImageViewController: UIViewController {
         )
         present(share, animated: true, completion: nil)
     }
-    @IBAction func didTapBackButton() {
+    @IBAction private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
 }

@@ -9,19 +9,14 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-   
-    @IBOutlet weak var logoutButton: UIButton!
-    
-    private var profileImage = UIImageView()
-    private var nameLable = UILabel()
-    private var descriptionLable = UILabel()
-    private var statusLable = UILabel()
-    private var exitbutton = UIButton()
+    private lazy var profileImage = UIImageView()
+    private lazy var nameLable = UILabel()
+    private lazy var descriptionLable = UILabel()
+    private lazy var statusLable = UILabel()
+    private lazy var exitbutton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-        logoutButton.isHidden = true
         
         addProfileImageView()
         addProfileNameLable()
@@ -38,7 +33,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(profileImage)
         
         NSLayoutConstraint.activate([
-            profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 76),
+            profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             profileImage.widthAnchor.constraint(equalToConstant: 70),
             profileImage.heightAnchor.constraint(equalToConstant: 70)
@@ -94,8 +89,8 @@ final class ProfileViewController: UIViewController {
         view.addSubview(exitbutton)
         
         NSLayoutConstraint.activate([
-            exitbutton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 99),
-            exitbutton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            exitbutton.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor),
+            exitbutton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             exitbutton.widthAnchor.constraint(equalToConstant: 24),
             exitbutton.heightAnchor.constraint(equalToConstant: 24)
         ])
