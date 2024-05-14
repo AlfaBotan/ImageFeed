@@ -34,7 +34,6 @@ final class SingleImageViewController: UIViewController {
         imageView.image = image
         imageView.frame.size = image.size
         rescaleAndCenterImageInScrollView(image: image)
-    
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
