@@ -53,10 +53,6 @@ final class WebViewViewController: UIViewController {
         webView.load(request)
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        
-//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         webView.addObserver(
@@ -72,10 +68,6 @@ final class WebViewViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
 
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//    }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(WKWebView.estimatedProgress) {
@@ -100,25 +92,27 @@ extension WebViewViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
          if let code = code(from: navigationAction) {
+             print("CODE Acces")
              delegate?.webViewViewController(self, didAuthenticateWithCode: code)
              decisionHandler(.cancel)
           } else {
+              print("CODE NOT Acces")
                 decisionHandler(.allow)
           }
     }
     
-    private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        {
-            return codeItem.value
-        } else {
-            return nil
-        }
+     func code(from navigationAction: WKNavigationAction) -> String? {
+         if
+               let url = navigationAction.request.url,                         
+               let urlComponents = URLComponents(string: url.absoluteString),
+               urlComponents.path == "/oauth/authorize/native",
+               let items = urlComponents.queryItems,
+               let codeItem = items.first(where: { $0.name == "code" })
+           {
+               return codeItem.value
+           } else {
+               return nil
+           }
     }
 }
 
