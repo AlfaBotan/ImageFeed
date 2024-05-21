@@ -32,7 +32,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="9lx-m3-fbg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Войти">
                                     <color key="titleColor" name="YP Black"/>
@@ -129,7 +129,6 @@
                     </view>
                     <connections>
                         <segue destination="N2y-Lu-zPU" kind="presentation" identifier="logInOrUpFlowIdentifire" modalPresentationStyle="fullScreen" id="h0y-YJ-KWI"/>
-                        <segue destination="FII-xU-8Le" kind="presentation" identifier="profileOrGallaryIdentifire" modalPresentationStyle="fullScreen" id="Qub-Rf-CTb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUJ-c2-dmH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -362,7 +361,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="8Fv-wo-NnZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Ne-0g-lGF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="YP White"/>
                         <color key="barTintColor" name="YP White"/>

@@ -17,20 +17,14 @@ final class OAuth2TokenStorage {
     
     private var token: String {
         get {
-            guard let data = userDefaults.data(forKey: Keys.token.rawValue),
-                  let token = try? JSONDecoder().decode(String.self, from: data) else {
+            guard let token = userDefaults.string(forKey: Keys.token.rawValue) else {
                 return ""
             }
            return token
         }
         
         set {
-            guard let token = try? JSONEncoder().encode(newValue) else {
-                print("Невозможно сохранить результат")
-                return
-            }
-            
-            userDefaults.set(token, forKey: Keys.token.rawValue)
+            userDefaults.set(newValue, forKey: Keys.token.rawValue)
         }
     }
     

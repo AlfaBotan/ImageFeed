@@ -21,7 +21,7 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ final class WebViewViewController: UIViewController {
     
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            print("urlComponents")
+            print("не удалось создать urlComponents из WebViewConstants.unsplashAuthorizeURLString")
             return
         }
 
@@ -45,7 +45,7 @@ final class WebViewViewController: UIViewController {
         ]
 
         guard let url = urlComponents.url else {
-            print("url")
+            print("не удалось создать url из urlComponents")
             return
         }
 

@@ -79,12 +79,19 @@
 		1C61BFA12BFB8D60006B3572 /* ServiceAccess */ = {
 			isa = PBXGroup;
 			children = (
-				1C9AF59E2BF7DB0900C45CFB /* URLSession+data.swift */,
 				1C9AF5A02BF7F2CF00C45CFB /* OAuthTokenResponseBody.swift */,
 				1C9AF5A22BF7F89100C45CFB /* OAuth2TokenStorage.swift */,
 				1CEB2FBB2BF7C12100DDBE36 /* OAuth2Service.swift */,
 			);
 			path = ServiceAccess;
+			sourceTree = "<group>";
+		};
+		1C61BFA22BFD1659006B3572 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1C9AF59E2BF7DB0900C45CFB /* URLSession+data.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		1C74A5332BEAC3D800F2D24D /* SingleImageVC */ = {
@@ -131,6 +138,7 @@
 				1C74A5332BEAC3D800F2D24D /* SingleImageVC */,
 				1C96B2CD2BEA6B0400E471D1 /* ProfileVC */,
 				1CF456462BC334720024B9D8 /* ImagesListVC */,
+				1C61BFA22BFD1659006B3572 /* Extension */,
 				1CB180002BB868FE00CEF8B9 /* Main.storyboard */,
 				1CB180032BB8690000CEF8B9 /* Assets.xcassets */,
 				1CB180052BB8690000CEF8B9 /* LaunchScreen.storyboard */,

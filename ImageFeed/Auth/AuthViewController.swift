@@ -10,18 +10,17 @@ import WebKit
 
 final class AuthViewController: UIViewController {
     private let showWebViewSegueIdentifier = "ShowWebView"
-    private let webViewVC = WebViewViewController()
+//    private let webViewVC = WebViewViewController()
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     
-    var delegate: AuthViewControllerDelegate?
+    weak var delegate: AuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
-        
     }
     
-   func configureBackButton() {
+  private func configureBackButton() {
        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Backward")
        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Backward")
        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -33,7 +32,9 @@ final class AuthViewController: UIViewController {
             guard 
                 let webViewVC = segue.destination as? WebViewViewController
             else {
-                fatalError("Failed to prepare for \(showWebViewSegueIdentifier)")
+                assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
+                print("Failed to prepare for \(showWebViewSegueIdentifier)")
+                return
                  }
             webViewVC.delegate = self
         } else {

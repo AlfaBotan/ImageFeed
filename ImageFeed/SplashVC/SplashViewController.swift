@@ -15,8 +15,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         if let storageToken = oAuth2TokenStorage.getStorageToken() {
             print("\(storageToken)")
-            performSegue(withIdentifier: "profileOrGallaryIdentifire", sender: nil)
-//            switchToTabBarController()
+            switchToTabBarController()
         } else {
             performSegue(withIdentifier: "logInOrUpFlowIdentifire", sender: nil)
         }
@@ -41,17 +40,15 @@ final class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        performSegue(withIdentifier: "profileOrGallaryIdentifire", sender: nil)
-//        switchToTabBarController()
+        switchToTabBarController()
     }
 }
 
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Проверим, что переходим на авторизацию
+        
         if segue.identifier == "logInOrUpFlowIdentifire" {
             
-            // Доберёмся до первого контроллера в навигации. Мы помним, что в программировании отсчёт начинается с 0?
             guard
                 let navigationController = segue.destination as? UINavigationController,
                 let viewController = navigationController.viewControllers[0] as? AuthViewController
@@ -59,10 +56,7 @@ extension SplashViewController {
                 assertionFailure("Failed to prepare for \("logInOrUpFlowIdentifire")")
                 return
             }
-            
-            // Установим делегатом контроллера наш SplashViewController
             viewController.delegate = self
-            
         } else {
             super.prepare(for: segue, sender: sender)
            }
