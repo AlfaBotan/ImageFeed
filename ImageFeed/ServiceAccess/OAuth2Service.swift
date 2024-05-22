@@ -7,14 +7,23 @@
 
 import UIKit
 
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 final class OAuth2Service {
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
+    
     static let shared = OAuth2Service()
     private init(){}
     
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard
             let baseURL = URL(string: "https://unsplash.com")
-        else { print("baseURL")
+        else { print("Fail create baseURL for OAuthTokenRequest")
                return nil
         }
         guard
@@ -28,7 +37,7 @@ final class OAuth2Service {
              relativeTo: baseURL
          )
         else {
-            print("URL")
+            print("Fail create URL for OAuthTokenRequest")
             return nil
         }
          var request = URLRequest(url: url)
@@ -36,25 +45,65 @@ final class OAuth2Service {
          return request
      }
     
+//    func fetchOAuthToken2(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+//        guard let urlRequest: URLRequest = makeOAuthTokenRequest(code: code) else { return}
+//        let task = URLSession.shared.data(for: urlRequest) { result in
+//            switch result {
+//            case .success(let data):
+//                do {
+//                    let decoder = JSONDecoder()
+//                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+//                    completion(.success(response.accessToken))
+//                } catch {
+//                    completion(.failure(error))
+//                    print("не получилось декодировать полученный ответ")
+//                }
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//        task.resume()
+//    }
+    
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let urlRequest: URLRequest = makeOAuthTokenRequest(code: code) else { return}
-        let task = URLSession.shared.data(for: urlRequest) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    completion(.success(response.accessToken))
-                } catch {
+            assert(Thread.isMainThread)
+        guard lastCode != code else {                               // 1
+                   completion(.failure(AuthServiceError.invalidRequest))
+                   return
+               }
+
+               task?.cancel()                                      // 2
+               lastCode = code                                     // 3
+            guard
+                let request = makeOAuthTokenRequest(code: code)
+            else {
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+
+        let task = URLSession.shared.data(for: request) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                        completion(.success(response.accessToken))
+                    } catch {
+                        completion(.failure(error))
+                        print("не получилось декодировать полученный ответ")
+                    }
+                case .failure(let error):
                     completion(.failure(error))
-                    print("не получилось декодировать полученный ответ")
                 }
-            case .failure(let error):
-                completion(.failure(error))
+                self.task = nil
+                self.lastCode = nil
             }
         }
-        task.resume()
-    }
+            self.task = task
+            task.resume()
+        }
     
 }
