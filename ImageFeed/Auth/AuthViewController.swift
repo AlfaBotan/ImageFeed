@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import ProgressHUD
 
 final class AuthViewController: UIViewController {
     private let showWebViewSegueIdentifier = "ShowWebView"
@@ -47,7 +48,10 @@ extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         vc.dismiss(animated: true)
+        ProgressHUD.animate()
         OAuth2Service.shared.fetchOAuthToken(code: code) { result in
+            ProgressHUD.dismiss()
+
             switch result {
             case .success(let token):
                 print("\(token)")
