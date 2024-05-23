@@ -8,14 +8,16 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if let storageToken = oAuth2TokenStorage.getStorageToken() {
-            print("\(storageToken)")
-            switchToTabBarController()
+//            print("\(storageToken)")
+            fetchProfile(token: storageToken)
         } else {
             performSegue(withIdentifier: "logInOrUpFlowIdentifire", sender: nil)
         }
@@ -40,7 +42,35 @@ final class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        switchToTabBarController()
+    }
+    
+//    func fetchProfileImageURL(username: String) {
+//        profileImageService.fetchProfileImageURL(username: username) { _ in}
+//    }
+    
+    func fetchProfile(token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token: token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(_):
+                profileImageService.fetchProfileImageURL(username: (profileService.profile?.username)!) { result in
+                    switch result {
+                    case .success(let string):
+                        print("\(string)")
+                    case .failure(_):
+                        print("что-то не так")
+                    }
+                }
+                self.switchToTabBarController()
+            case .failure(_):
+                print("ошибка из функции fetchProfile в SplashVC")
+                break
+            }
+        }
     }
 }
 

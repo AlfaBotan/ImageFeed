@@ -45,36 +45,15 @@ final class OAuth2Service {
          return request
      }
     
-//    func fetchOAuthToken2(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-//        guard let urlRequest: URLRequest = makeOAuthTokenRequest(code: code) else { return}
-//        let task = URLSession.shared.data(for: urlRequest) { result in
-//            switch result {
-//            case .success(let data):
-//                do {
-//                    let decoder = JSONDecoder()
-//                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-//                    completion(.success(response.accessToken))
-//                } catch {
-//                    completion(.failure(error))
-//                    print("не получилось декодировать полученный ответ")
-//                }
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//        task.resume()
-//    }
-    
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
             assert(Thread.isMainThread)
-        guard lastCode != code else {                               // 1
+        guard lastCode != code else {
                    completion(.failure(AuthServiceError.invalidRequest))
                    return
                }
 
-               task?.cancel()                                      // 2
-               lastCode = code                                     // 3
+               task?.cancel()
+               lastCode = code
             guard
                 let request = makeOAuthTokenRequest(code: code)
             else {

@@ -11,9 +11,10 @@ final class ProfileViewController: UIViewController {
     
     private lazy var profileImage = UIImageView()
     private lazy var nameLable = UILabel()
-    private lazy var descriptionLable = UILabel()
+    private lazy var loginNameLabel = UILabel()
     private lazy var statusLable = UILabel()
     private lazy var exitbutton = UIButton()
+//    private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,18 @@ final class ProfileViewController: UIViewController {
         addProfileDescriptionLable()
         addProfileStatusLable()
         addExitButton()
+        
+        installNewValueForLables()
+    }
+    
+    private func installNewValueForLables() {
+        guard let profile = ProfileService.shared.profile else {
+            print("Profile not have value")
+            return
+        }
+        self.statusLable.text = profile.bio
+        self.nameLable.text = profile.name
+        self.loginNameLabel.text = profile.loginName
     }
     
     private func addProfileImageView() {
@@ -56,15 +69,15 @@ final class ProfileViewController: UIViewController {
     
     private func addProfileDescriptionLable(){
         
-        descriptionLable.text = "Description"
-        descriptionLable.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(descriptionLable)
-        descriptionLable.font = .systemFont(ofSize: 13)
-        descriptionLable.textColor = .ypGray
+        loginNameLabel.text = "Description"
+        loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginNameLabel)
+        loginNameLabel.font = .systemFont(ofSize: 13)
+        loginNameLabel.textColor = .ypGray
         
         NSLayoutConstraint.activate([
-            descriptionLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8),
-            descriptionLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+            loginNameLabel.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8),
+            loginNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
     }
     
@@ -76,7 +89,7 @@ final class ProfileViewController: UIViewController {
         statusLable.textColor = .ypWhite
         
         NSLayoutConstraint.activate([
-            statusLable.topAnchor.constraint(equalTo: descriptionLable.bottomAnchor, constant: 8),
+            statusLable.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
             statusLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
     }
