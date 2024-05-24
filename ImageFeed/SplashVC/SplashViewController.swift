@@ -16,9 +16,20 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if let storageToken = oAuth2TokenStorage.getStorageToken() {
-//            print("\(storageToken)")
+            print("""
+                    SplashViewController  viewDidAppear
+                  \(storageToken)
+                    SplashViewController  viewDidAppear
+
+                  """)
             fetchProfile(token: storageToken)
         } else {
+            print("""
+                  SplashViewController  viewDidAppear
+                  нет токена
+                  SplashViewController  viewDidAppear
+
+                  """)
             performSegue(withIdentifier: "logInOrUpFlowIdentifire", sender: nil)
         }
     }
@@ -42,6 +53,8 @@ final class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
+        print("Сработал метод didAuthenticate") 
+        switchToTabBarController()
     }
     
 //    func fetchProfileImageURL(username: String) {
@@ -60,7 +73,11 @@ extension SplashViewController: AuthViewControllerDelegate {
                 profileImageService.fetchProfileImageURL(username: (profileService.profile?.username)!) { result in
                     switch result {
                     case .success(let string):
-                        print("\(string)")
+                        print("""
+                                      func fetchProfile(token: String)
+                              \(string)
+                                  func fetchProfile(token: String)
+                              """)
                     case .failure(_):
                         print("что-то не так")
                     }

@@ -61,26 +61,42 @@ final class OAuth2Service {
                 return
             }
 
-        let task = URLSession.shared.data(for: request) { result in
+//        let task = URLSession.shared.data(for: request) { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let data):
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+//                        completion(.success(response.accessToken))
+//                    } catch {
+//                        completion(.failure(error))
+//                        print("не получилось декодировать полученный ответ")
+//                    }
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//                self.task = nil
+//                self.lastCode = nil
+//            }
+//        }
+        
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                        completion(.success(response.accessToken))
-                    } catch {
-                        completion(.failure(error))
-                        print("не получилось декодировать полученный ответ")
-                    }
-                case .failure(let error):
+                case.success(let oAuthTokenResponseBody):
+                    completion(.success(oAuthTokenResponseBody.accessToken))
+                case.failure(let error):
+                    print("Ошибка там где не ждали")
                     completion(.failure(error))
                 }
                 self.task = nil
                 self.lastCode = nil
             }
         }
+        
             self.task = task
             task.resume()
         }

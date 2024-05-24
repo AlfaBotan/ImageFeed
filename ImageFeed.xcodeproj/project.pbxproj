@@ -129,7 +129,6 @@
 		1C96B2CD2BEA6B0400E471D1 /* ProfileVC */ = {
 			isa = PBXGroup;
 			children = (
-				1C19BA0A2BFE863600819ED6 /* Models */,
 				1C19BA062BFE653E00819ED6 /* ProfileService.swift */,
 				1C19BA0F2BFE9B1100819ED6 /* ProfileImageService.swift */,
 				1C96B2CB2BEA318E00E471D1 /* ProfileViewController.swift */,
@@ -159,6 +158,7 @@
 				1CB17FFA2BB868FE00CEF8B9 /* AppDelegate.swift */,
 				1CB17FFC2BB868FE00CEF8B9 /* SceneDelegate.swift */,
 				1C3AFD972BF2886200A2EF0B /* Constants.swift */,
+				1C19BA0A2BFE863600819ED6 /* Models */,
 				1C61BFA12BFB8D60006B3572 /* ServiceAccess */,
 				1C61BF9E2BFB74FD006B3572 /* SplashVC */,
 				1C3AFD9B2BF2A6BD00A2EF0B /* Auth */,
