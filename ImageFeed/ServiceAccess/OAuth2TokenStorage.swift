@@ -31,7 +31,6 @@ final class OAuth2TokenStorage {
     func setNewToken(token: String) {
         self.token = token
         print("Установлен Новый токен")
-//        switchToTabBarController()
     }
     
     func getStorageToken() -> String? {
@@ -41,20 +40,5 @@ final class OAuth2TokenStorage {
         }
         print("Из UD взят токен")
         return storageToken
-    }
-    
-    private func switchToTabBarController() {
-        // Получаем экземпляр `window` приложения
-        guard let window = UIApplication.shared.windows.first else {
-            assertionFailure("Invalid window configuration")
-            return
-        }
-        
-        // Создаём экземпляр нужного контроллера из Storyboard с помощью ранее заданного идентификатора
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarViewController")
-           
-        // Установим в `rootViewController` полученный контроллер
-        window.rootViewController = tabBarController
     }
 }

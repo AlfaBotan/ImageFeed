@@ -53,13 +53,9 @@ final class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        print("Сработал метод didAuthenticate") 
-        switchToTabBarController()
+        print("Сработал метод didAuthenticate")
+//        switchToTabBarController()
     }
-    
-//    func fetchProfileImageURL(username: String) {
-//        profileImageService.fetchProfileImageURL(username: username) { _ in}
-//    }
     
     func fetchProfile(token: String) {
         UIBlockingProgressHUD.show()
@@ -79,7 +75,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                                   func fetchProfile(token: String)
                               """)
                     case .failure(_):
-                        print("что-то не так")
+                        print("что-то не так в func fetchProfile(token: String)")
                     }
                 }
                 self.switchToTabBarController()
