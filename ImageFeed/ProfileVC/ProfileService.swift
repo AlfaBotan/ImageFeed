@@ -42,30 +42,6 @@ final class ProfileService {
             return
         }
 
-//    let task = URLSession.shared.data(for: request) { result in
-//        DispatchQueue.main.async {
-//            switch result {
-//            case .success(let data):
-//                do {
-//                    let decoder = JSONDecoder()
-//                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                    let profileResult = try decoder.decode(ProfileResult.self, from: data)
-//                    let profile = Profile(profileResult: profileResult)
-//                    self.profile = profile
-//                    completion(.success(profile))
-//                } catch {
-//                    completion(.failure(error))
-//                    print("не получилось декодировать полученный ответ")
-//                }
-//            case .failure(let error):
-//                print("Ошибка из метода fetchProfile")
-//                completion(.failure(error))
-//            }
-//            self.task = nil
-//            self.lastToken = nil
-//        }
-//    }
-        
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }

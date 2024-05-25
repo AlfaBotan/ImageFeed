@@ -46,41 +46,6 @@ final class ProfileImageService {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
-
-//    let task = URLSession.shared.data(for: request) { result in
-//        DispatchQueue.main.async {
-//            switch result {
-//            case .success(let data):
-//                do {
-//                    let decoder = JSONDecoder()
-//                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                    let profileResult = try decoder.decode(ProfileResult.self, from: data)
-//                    guard let smallProfileImage = profileResult.profileImage?.small else {
-//                        print("Error: [ProfileImageService] image is nil")
-//                        completion(.failure(NetworkError.imageError))
-//                        return
-//                    }
-//                    self.profileImage = profileResult.profileImage
-//                    self.avatarURL = smallProfileImage
-//                    completion(.success(smallProfileImage))
-//                    
-//                    NotificationCenter.default                                     // 1
-//                        .post(                                                     // 2
-//                            name: ProfileImageService.didChangeNotification,       // 3
-//                            object: self,                                          // 4
-//                            userInfo: ["URL": smallProfileImage])                    // 5
-//                } catch {
-//                    completion(.failure(error))
-//                    print("не получилось декодировать полученный ответ")
-//                }
-//            case .failure(let error):
-//                print("Ошибка из метода fetchProfile")
-//                completion(.failure(error))
-//            }
-//            self.task = nil
-//            self.lastToken = nil
-//        }
-//    }
         
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             DispatchQueue.main.async {
@@ -95,15 +60,15 @@ final class ProfileImageService {
                     self.profileImage = profileResult.profileImage
                     self.avatarURL = smallProfileImage
                     completion(.success(smallProfileImage))
-                   
-                NotificationCenter.default
-                    .post(
-                        name: ProfileImageService.didChangeNotification,
-                        object: self,
-                      userInfo: ["URL": smallProfileImage])
+                    
+                    NotificationCenter.default
+                        .post(
+                            name: ProfileImageService.didChangeNotification,
+                            object: self,
+                            userInfo: ["URL": smallProfileImage])
                 case .failure(let error):
-                                    print("Ошибка из метода fetchProfileImageURL")
-                                    completion(.failure(error))
+                    print("Ошибка из метода fetchProfileImageURL")
+                    completion(.failure(error))
                 }
                 self.task = nil
                 self.lastToken = nil
@@ -112,5 +77,4 @@ final class ProfileImageService {
         self.task = task
         task.resume()
     }
-    
 }

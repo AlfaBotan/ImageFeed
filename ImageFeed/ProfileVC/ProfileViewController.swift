@@ -29,14 +29,14 @@ final class ProfileViewController: UIViewController {
         
         installNewValueForLables()
         
-        profileImageServiceObserver = NotificationCenter.default    // 2
+        profileImageServiceObserver = NotificationCenter.default
                     .addObserver(
-                        forName: ProfileImageService.didChangeNotification, // 3
-                        object: nil,                                        // 4
-                        queue: .main                                        // 5
+                        forName: ProfileImageService.didChangeNotification,
+                        object: nil,
+                        queue: .main
                     ) { [weak self] _ in
                         guard let self = self else { return }
-                        self.updateAvatar()                                 // 6
+                        self.updateAvatar()
                     }
                 updateAvatar()
     }
@@ -81,7 +81,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addProfileDescriptionLable(){
-        
         loginNameLabel.text = "Description"
         loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginNameLabel)
@@ -108,8 +107,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addExitButton(){
-        
-//        exitbutton.tintColor = .red
         exitbutton.setImage(UIImage(named: "Exit"), for: .normal)
         exitbutton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitbutton)
@@ -135,5 +132,4 @@ final class ProfileViewController: UIViewController {
 
               """)
        }
-    
 }

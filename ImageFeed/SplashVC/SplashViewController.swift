@@ -20,7 +20,6 @@ final class SplashViewController: UIViewController {
                     SplashViewController  viewDidAppear
                   \(storageToken)
                     SplashViewController  viewDidAppear
-
                   """)
             fetchProfile(token: storageToken)
         } else {
@@ -54,7 +53,6 @@ extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
         print("Сработал метод didAuthenticate")
-//        switchToTabBarController()
     }
     
     func fetchProfile(token: String) {
