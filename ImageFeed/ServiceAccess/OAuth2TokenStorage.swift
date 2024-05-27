@@ -18,9 +18,6 @@ final class OAuth2TokenStorage {
     
     private var token: String {
         get {
-//            guard let token = userDefaults.string(forKey: Keys.token.rawValue) else {
-//                return ""
-//            }
             guard let token: String = KeychainWrapper.standard.string(forKey: "Auth token") else {
                 return ""
             }
@@ -28,7 +25,6 @@ final class OAuth2TokenStorage {
         }
         
         set {
-//            userDefaults.set(newValue, forKey: Keys.token.rawValue)
             let isSuccess = KeychainWrapper.standard.set(newValue, forKey: "Auth token")
             guard isSuccess else {
                 print("не удалось сохранить токен в Keychain")

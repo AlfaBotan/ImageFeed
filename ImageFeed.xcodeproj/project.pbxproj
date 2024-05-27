@@ -33,6 +33,7 @@
 		1CF456482BC3348F0024B9D8 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF456472BC3348F0024B9D8 /* ImagesListCell.swift */; };
 		1CFE2D552C04A53800C7CD59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1CFE2D542C04A53800C7CD59 /* Kingfisher */; };
 		1CFE2D582C04BAAC00C7CD59 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1CFE2D572C04BAAC00C7CD59 /* SwiftKeychainWrapper */; };
+		1CFE2D5A2C04BFD400C7CD59 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE2D592C04BFD400C7CD59 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		1CB180082BB8690000CEF8B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CEB2FBB2BF7C12100DDBE36 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		1CF456472BC3348F0024B9D8 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		1CFE2D592C04BFD400C7CD59 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		1C61BFA22BFD1659006B3572 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1C19BA042BFE618F00819ED6 /* UIBlockingProgressHUD.swift */,
 				1C9AF59E2BF7DB0900C45CFB /* URLSession+data.swift */,
 			);
 			path = Extension;
@@ -162,6 +165,7 @@
 				1CB17FFA2BB868FE00CEF8B9 /* AppDelegate.swift */,
 				1CB17FFC2BB868FE00CEF8B9 /* SceneDelegate.swift */,
 				1C3AFD972BF2886200A2EF0B /* Constants.swift */,
+				1CFE2D592C04BFD400C7CD59 /* TabBarController.swift */,
 				1C19BA0A2BFE863600819ED6 /* Models */,
 				1C61BFA12BFB8D60006B3572 /* ServiceAccess */,
 				1C61BF9E2BFB74FD006B3572 /* SplashVC */,
@@ -174,7 +178,6 @@
 				1CB180032BB8690000CEF8B9 /* Assets.xcassets */,
 				1CB180052BB8690000CEF8B9 /* LaunchScreen.storyboard */,
 				1CB180082BB8690000CEF8B9 /* Info.plist */,
-				1C19BA042BFE618F00819ED6 /* UIBlockingProgressHUD.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				1CEB2FBC2BF7C12100DDBE36 /* OAuth2Service.swift in Sources */,
 				1C19BA0E2BFE865600819ED6 /* Profile.swift in Sources */,
 				1C19BA102BFE9B1100819ED6 /* ProfileImageService.swift in Sources */,
+				1CFE2D5A2C04BFD400C7CD59 /* TabBarController.swift in Sources */,
 				1C9AF5A32BF7F89100C45CFB /* OAuth2TokenStorage.swift in Sources */,
 				1CB17FFD2BB868FE00CEF8B9 /* SceneDelegate.swift in Sources */,
 			);

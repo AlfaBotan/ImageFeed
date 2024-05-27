@@ -17,7 +17,6 @@ final class ProfileViewController: UIViewController {
     private lazy var loginNameLabel = UILabel()
     private lazy var statusLable = UILabel()
     private lazy var exitbutton = UIButton()
-//    private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,17 +124,16 @@ final class ProfileViewController: UIViewController {
                let profileImageURL = ProfileImageService.shared.avatarURL,
                let imageUrl = URL(string: profileImageURL)
            else { return }
-           // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
         print("""
               ссылка готова, центр уведомлений отработал
               \(imageUrl)
               ссылка готова, центр уведомлений отработал
-
               """)
+        
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        let processor = RoundCornerImageProcessor(cornerRadius: 50)
         profileImage.kf.indicatorType = .activity
         profileImage.kf.setImage(with: imageUrl,
                               placeholder: UIImage(named: "person.crop.circle.fill"),
@@ -146,17 +144,10 @@ final class ProfileViewController: UIViewController {
                                   case .success(let value):
                                       // Картинка
                                       print(value.image)
-                                      
-                                      // Откуда картинка загружена:
-                                      // - .none — из сети.
-                                      // - .memory — из кэша оперативной памяти.
-                                      // - .disk — из дискового кэша.
-                                      print(value.cacheType)
-                                      
                                       // Информация об источнике.
                                       print(value.source)
                                   case .failure(let error):
-                                      print(error)
+                                      print("Изображение не загрузилось с ошибкой \(error)")
                                   }
                               }
        }
