@@ -6,11 +6,18 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let oAuth2TokenStorage = OAuth2TokenStorage()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "Auth token")
+//        print("removeSuccessful \(removeSuccessful)")
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

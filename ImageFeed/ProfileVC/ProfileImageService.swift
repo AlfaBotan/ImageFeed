@@ -52,20 +52,20 @@ final class ProfileImageService {
                 guard let self = self else { return }
                 switch result {
                 case.success(let profileResult):
-                    guard let smallProfileImage = profileResult.profileImage?.small else {
+                    guard let largeProfileImage = profileResult.profileImage?.large else {
                         print("Error: [ProfileImageService] image is nil")
                         completion(.failure(NetworkError.imageError))
                         return
                     }
                     self.profileImage = profileResult.profileImage
-                    self.avatarURL = smallProfileImage
-                    completion(.success(smallProfileImage))
+                    self.avatarURL = largeProfileImage
+                    completion(.success(largeProfileImage))
                     
                     NotificationCenter.default
                         .post(
                             name: ProfileImageService.didChangeNotification,
                             object: self,
-                            userInfo: ["URL": smallProfileImage])
+                            userInfo: ["URL": largeProfileImage])
                 case .failure(let error):
                     print("Ошибка из метода fetchProfileImageURL")
                     completion(.failure(error))

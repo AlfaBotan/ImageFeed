@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -122,14 +123,41 @@ final class ProfileViewController: UIViewController {
     private func updateAvatar() {
            guard
                let profileImageURL = ProfileImageService.shared.avatarURL,
-               let url = URL(string: profileImageURL)
+               let imageUrl = URL(string: profileImageURL)
            else { return }
            // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
         print("""
               ссылка готова, центр уведомлений отработал
-              \(url)
+              \(imageUrl)
               ссылка готова, центр уведомлений отработал
 
               """)
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        profileImage.kf.indicatorType = .activity
+        profileImage.kf.setImage(with: imageUrl,
+                              placeholder: UIImage(named: "person.crop.circle.fill"),
+                                 options: [.processor(processor)]) { result in
+                                  
+                                  switch result {
+                                // Успешная загрузка
+                                  case .success(let value):
+                                      // Картинка
+                                      print(value.image)
+                                      
+                                      // Откуда картинка загружена:
+                                      // - .none — из сети.
+                                      // - .memory — из кэша оперативной памяти.
+                                      // - .disk — из дискового кэша.
+                                      print(value.cacheType)
+                                      
+                                      // Информация об источнике.
+                                      print(value.source)
+                                  case .failure(let error):
+                                      print(error)
+                                  }
+                              }
        }
 }
