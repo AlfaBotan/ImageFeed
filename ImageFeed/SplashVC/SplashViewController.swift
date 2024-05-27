@@ -58,7 +58,11 @@ extension SplashViewController: AuthViewControllerDelegate {
             
             switch result {
             case .success(_):
-                profileImageService.fetchProfileImageURL(username: (profileService.profile?.username)!) { result in
+                guard let userName = profileService.profile?.username else {
+                    print("не получили имя пользователя для загрузки аватарки")
+                    return
+                }
+                profileImageService.fetchProfileImageURL(username: userName) { result in
                     switch result {
                     case .success(let string):
                         print("""

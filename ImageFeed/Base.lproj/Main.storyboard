@@ -44,7 +44,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="RHm-w0-xYy" kind="show" identifier="ShowWebView" id="CKL-8y-56c"/>
+                                    <segue destination="RHm-w0-xYy" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="CKL-8y-56c"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -73,39 +73,54 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RlD-6s-W0e">
-                                <rect key="frame" x="0.0" y="92" width="414" height="804"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wtm-jn-LVs">
-                                <rect key="frame" x="0.0" y="92" width="414" height="4"/>
-                                <color key="progressTintColor" name="YP Black"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uh-sj-39Q">
+                                <rect key="frame" x="9" y="0.0" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="0CE-oo-pVb"/>
+                                    <constraint firstAttribute="width" constant="24" id="Ose-89-hEH"/>
+                                </constraints>
+                                <buttonConfiguration key="configuration" style="plain" image="BackwardBlack"/>
+                                <connections>
+                                    <action selector="tapBackButton:" destination="RHm-w0-xYy" eventType="touchUpInside" id="cj9-Nq-tkt"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wtm-jn-LVs">
+                                <rect key="frame" x="0.0" y="40" width="414" height="2.5"/>
+                                <color key="backgroundColor" name="YP White"/>
+                                <color key="tintColor" name="YP Blue"/>
+                                <color key="progressTintColor" name="YP Blue"/>
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="heF-XN-dww"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="wtm-jn-LVs" firstAttribute="top" secondItem="heF-XN-dww" secondAttribute="top" id="JPx-3s-316"/>
-                            <constraint firstItem="RlD-6s-W0e" firstAttribute="leading" secondItem="OkX-mj-UfP" secondAttribute="leading" id="MAJ-SX-GDv"/>
+                            <constraint firstItem="5uh-sj-39Q" firstAttribute="top" secondItem="heF-XN-dww" secondAttribute="top" id="9Tt-x1-jmS"/>
+                            <constraint firstItem="wtm-jn-LVs" firstAttribute="top" secondItem="heF-XN-dww" secondAttribute="top" constant="40" id="JPx-3s-316"/>
+                            <constraint firstItem="RlD-6s-W0e" firstAttribute="leading" secondItem="heF-XN-dww" secondAttribute="leading" id="MAJ-SX-GDv"/>
                             <constraint firstItem="heF-XN-dww" firstAttribute="trailing" secondItem="wtm-jn-LVs" secondAttribute="trailing" id="Ms5-In-6by"/>
-                            <constraint firstItem="RlD-6s-W0e" firstAttribute="top" secondItem="heF-XN-dww" secondAttribute="top" id="OYe-e6-X0y"/>
+                            <constraint firstItem="RlD-6s-W0e" firstAttribute="top" secondItem="OkX-mj-UfP" secondAttribute="top" id="OYe-e6-X0y"/>
                             <constraint firstItem="wtm-jn-LVs" firstAttribute="leading" secondItem="heF-XN-dww" secondAttribute="leading" id="VaX-jS-kkl"/>
                             <constraint firstAttribute="bottom" secondItem="RlD-6s-W0e" secondAttribute="bottom" id="Xto-2O-Uzw"/>
-                            <constraint firstAttribute="trailing" secondItem="RlD-6s-W0e" secondAttribute="trailing" id="evp-rM-FDb"/>
+                            <constraint firstItem="heF-XN-dww" firstAttribute="trailing" secondItem="RlD-6s-W0e" secondAttribute="trailing" id="evp-rM-FDb"/>
+                            <constraint firstItem="5uh-sj-39Q" firstAttribute="leading" secondItem="heF-XN-dww" secondAttribute="leading" constant="9" id="wu4-J9-058"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="zaR-7E-PfP"/>
                     <connections>
+                        <outlet property="backButton" destination="5uh-sj-39Q" id="ufV-dQ-DNG"/>
                         <outlet property="progressView" destination="wtm-jn-LVs" id="vRq-OF-Xcp"/>
                         <outlet property="webView" destination="RlD-6s-W0e" id="1jZ-5N-f2U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="THi-RX-G3U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1496" y="-1329"/>
+            <point key="canvasLocation" x="1495.6521739130435" y="-1329.2410714285713"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pGh-WH-hGv">
@@ -339,6 +354,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XF5-JC-Gnh">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="YP White"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -354,11 +370,15 @@
         <image name="0" width="1600" height="1059"/>
         <image name="Active" width="42" height="42"/>
         <image name="Backward" width="24" height="24"/>
+        <image name="BackwardBlack" width="24" height="24"/>
         <image name="SharingButton" width="30" height="30"/>
         <image name="auth_screen_logo" width="60" height="60"/>
         <image name="tab_editorial_active" width="30.5" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="YP Blue">
+            <color red="0.21600000560283661" green="0.44699999690055847" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="YP White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

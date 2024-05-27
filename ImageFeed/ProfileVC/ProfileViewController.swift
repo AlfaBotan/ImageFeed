@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .ypBlack
         addProfileImageView()
         addProfileNameLable()
         addProfileDescriptionLable()
@@ -46,9 +46,9 @@ final class ProfileViewController: UIViewController {
             print("Profile not have value")
             return
         }
-        self.statusLable.text = profile.bio
-        self.nameLable.text = profile.name
-        self.loginNameLabel.text = profile.loginName
+        statusLable.text = profile.bio
+        nameLable.text = profile.name
+        loginNameLabel.text = profile.loginName
     }
     
     private func addProfileImageView() {
@@ -136,7 +136,7 @@ final class ProfileViewController: UIViewController {
         let processor = RoundCornerImageProcessor(cornerRadius: 50)
         profileImage.kf.indicatorType = .activity
         profileImage.kf.setImage(with: imageUrl,
-                              placeholder: UIImage(named: "person.crop.circle.fill"),
+                                 placeholder: UIImage(named: "person.crop.circle.fill"),
                                  options: [.processor(processor)]) { result in
                                   
                                   switch result {
