@@ -6,23 +6,49 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     private lazy var profileImage = UIImageView()
     private lazy var nameLable = UILabel()
-    private lazy var descriptionLable = UILabel()
+    private lazy var loginNameLabel = UILabel()
     private lazy var statusLable = UILabel()
     private lazy var exitbutton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .ypBlack
         addProfileImageView()
         addProfileNameLable()
         addProfileDescriptionLable()
         addProfileStatusLable()
         addExitButton()
+        
+        installNewValueForLables()
+        
+        profileImageServiceObserver = NotificationCenter.default
+                    .addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                        object: nil,
+                        queue: .main
+                    ) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateAvatar()
+                    }
+                updateAvatar()
+    }
+    
+    private func installNewValueForLables() {
+        guard let profile = ProfileService.shared.profile else {
+            print("Profile not have value")
+            return
+        }
+        statusLable.text = profile.bio
+        nameLable.text = profile.name
+        loginNameLabel.text = profile.loginName
     }
     
     private func addProfileImageView() {
@@ -55,16 +81,15 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addProfileDescriptionLable(){
-        
-        descriptionLable.text = "Description"
-        descriptionLable.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(descriptionLable)
-        descriptionLable.font = .systemFont(ofSize: 13)
-        descriptionLable.textColor = .ypGray
+        loginNameLabel.text = "Description"
+        loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginNameLabel)
+        loginNameLabel.font = .systemFont(ofSize: 13)
+        loginNameLabel.textColor = .ypGray
         
         NSLayoutConstraint.activate([
-            descriptionLable.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8),
-            descriptionLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+            loginNameLabel.topAnchor.constraint(equalTo: nameLable.bottomAnchor, constant: 8),
+            loginNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
     }
     
@@ -76,14 +101,12 @@ final class ProfileViewController: UIViewController {
         statusLable.textColor = .ypWhite
         
         NSLayoutConstraint.activate([
-            statusLable.topAnchor.constraint(equalTo: descriptionLable.bottomAnchor, constant: 8),
+            statusLable.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
             statusLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
     }
     
     private func addExitButton(){
-        
-//        exitbutton.tintColor = .red
         exitbutton.setImage(UIImage(named: "Exit"), for: .normal)
         exitbutton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitbutton)
@@ -96,6 +119,36 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    
-    
+    private func updateAvatar() {
+           guard
+               let profileImageURL = ProfileImageService.shared.avatarURL,
+               let imageUrl = URL(string: profileImageURL)
+           else { return }
+        print("""
+              ссылка готова, центр уведомлений отработал
+              \(imageUrl)
+              ссылка готова, центр уведомлений отработал
+              """)
+        
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        let processor = RoundCornerImageProcessor(cornerRadius: 50)
+        profileImage.kf.indicatorType = .activity
+        profileImage.kf.setImage(with: imageUrl,
+                                 placeholder: UIImage(named: "person.crop.circle.fill"),
+                                 options: [.processor(processor)]) { result in
+                                  
+                                  switch result {
+                                // Успешная загрузка
+                                  case .success(let value):
+                                      // Картинка
+                                      print(value.image)
+                                      // Информация об источнике.
+                                      print(value.source)
+                                  case .failure(let error):
+                                      print("Изображение не загрузилось с ошибкой \(error)")
+                                  }
+                              }
+       }
 }

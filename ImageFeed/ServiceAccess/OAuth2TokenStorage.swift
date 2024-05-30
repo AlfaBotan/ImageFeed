@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 private enum Keys: String {
     case token
@@ -17,26 +18,33 @@ final class OAuth2TokenStorage {
     
     private var token: String {
         get {
-            guard let token = userDefaults.string(forKey: Keys.token.rawValue) else {
+            guard let token: String = KeychainWrapper.standard.string(forKey: "Auth token") else {
                 return ""
             }
            return token
         }
         
         set {
-            userDefaults.set(newValue, forKey: Keys.token.rawValue)
+            let isSuccess = KeychainWrapper.standard.set(newValue, forKey: "Auth token")
+            guard isSuccess else {
+                print("не удалось сохранить токен в Keychain")
+                return
+            }
         }
     }
     
     func setNewToken(token: String) {
         self.token = token
+        print("Установлен Новый токен в Keychain")
     }
     
     func getStorageToken() -> String? {
         let storageToken = self.token
         if storageToken.isEmpty {
+            print("не удалось взять токен из Keychain")
             return nil
         }
+        print("Из Keychain взят токен")
         return storageToken
     }
 }
