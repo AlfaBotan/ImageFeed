@@ -51,7 +51,6 @@ final class OAuth2Service {
                    completion(.failure(AuthServiceError.invalidRequest))
                    return
                }
-
                task?.cancel()
                lastCode = code
             guard
@@ -75,9 +74,7 @@ final class OAuth2Service {
                 self.lastCode = nil
             }
         }
-        
             self.task = task
             task.resume()
         }
-    
 }
