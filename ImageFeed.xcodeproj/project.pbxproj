@@ -196,9 +196,9 @@
 		1CF456462BC334720024B9D8 /* ImagesListVC */ = {
 			isa = PBXGroup;
 			children = (
-				1CB17FFE2BB868FE00CEF8B9 /* ImagesListViewController.swift */,
 				1CF456472BC3348F0024B9D8 /* ImagesListCell.swift */,
 				1CE515712C0CF011004764DE /* imageListServisce.swift */,
+				1CB17FFE2BB868FE00CEF8B9 /* ImagesListViewController.swift */,
 			);
 			path = ImagesListVC;
 			sourceTree = "<group>";

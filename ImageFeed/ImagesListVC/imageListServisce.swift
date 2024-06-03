@@ -14,6 +14,9 @@ final class ImagesListService {
     private var lastLoadedPage = 1
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
+    static let shared = ImagesListService()
+    private init(){}
+    
     func fetchPhotosNextPage() {
         guard task == nil else {return}
         
@@ -56,12 +59,12 @@ final class ImagesListService {
                                 createdAt: self.formatISODateString($0.createdAt),
                                 welcomeDescription: $0.description,
                                 thumbImageURL: $0.urls.thumb,
-                                largeImageURL: $0.urls.full,
-                                isLiked: $0.likedByUser
+                                fullImageURL: $0.urls.full,
+                                isLiked: $0.likedByUser, 
+                                regularImageURL: $0.urls.regular
                             )
                         )
                     }
-                    
                     NotificationCenter.default.post(
                         name: ImagesListService.didChangeNotification,
                         object: self,
@@ -98,6 +101,6 @@ final class ImagesListService {
     
     private func convertPhotoResult(photoResult: PhotoResult) -> Photo {
         let date = formatISODateString(photoResult.createdAt)
-        return Photo(id: photoResult.id, size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)), createdAt: date, welcomeDescription: photoResult.description, thumbImageURL: photoResult.urls.thumb, largeImageURL: photoResult.urls.full, isLiked: photoResult.likedByUser)
+        return Photo(id: photoResult.id, size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)), createdAt: date, welcomeDescription: photoResult.description, thumbImageURL: photoResult.urls.thumb, fullImageURL: photoResult.urls.full, isLiked: photoResult.likedByUser, regularImageURL: photoResult.urls.regular)
     }
 }
