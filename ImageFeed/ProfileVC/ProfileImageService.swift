@@ -8,15 +8,14 @@
 import UIKit
 
 final class ProfileImageService {
-    static let didChangeNotification = Notification.Name("ProfileImageProviderDidChange")
+    
     private(set) var profileImage: ProfileImage?
     private(set) var profile = ProfileService.shared.profile
     private(set) var avatarURL: String? = ""
-    
     private var lastToken: String?
     private var task: URLSessionTask?
-    
     private let oAuth2TokenStorage = OAuth2TokenStorage()
+    static let didChangeNotification = Notification.Name("ProfileImageProviderDidChange")
     static let shared = ProfileImageService()
     private init(){}
     
@@ -76,5 +75,12 @@ final class ProfileImageService {
         }
         self.task = task
         task.resume()
+    }
+    
+    func removeData() {
+        profileImage = nil
+        avatarURL = nil
+        lastToken = nil
+        task = nil
     }
 }

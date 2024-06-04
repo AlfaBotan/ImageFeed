@@ -16,8 +16,7 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "Auth token")
-//        print("removeSuccessful \(removeSuccessful)")
+
         configurationUI()
     }
     

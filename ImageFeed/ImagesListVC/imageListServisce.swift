@@ -164,4 +164,10 @@ final class ImagesListService {
         }
          task.resume()
     }
+    
+    func removeData() {
+        task = nil
+        photos = []
+        lastLoadedPage = 1
+    }
 }

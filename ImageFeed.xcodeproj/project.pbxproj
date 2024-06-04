@@ -16,6 +16,7 @@
 		1C3AFD982BF2886200A2EF0B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3AFD972BF2886200A2EF0B /* Constants.swift */; };
 		1C3AFD9A2BF2A1A300A2EF0B /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3AFD992BF2A1A300A2EF0B /* AuthViewController.swift */; };
 		1C3AFD9D2BF2AFC700A2EF0B /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3AFD9C2BF2AFC700A2EF0B /* WebViewViewController.swift */; };
+		1C407D5C2C0F9A5E00C3F819 /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C407D5B2C0F9A5E00C3F819 /* ProfileLogoutService.swift */; };
 		1C61BFA02BFB750E006B3572 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C61BF9F2BFB750E006B3572 /* SplashViewController.swift */; };
 		1C74A5322BEAAAFB00F2D24D /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C74A5312BEAAAFB00F2D24D /* SingleImageViewController.swift */; };
 		1C96B2CC2BEA318E00E471D1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C96B2CB2BEA318E00E471D1 /* ProfileViewController.swift */; };
@@ -50,6 +51,7 @@
 		1C3AFD972BF2886200A2EF0B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1C3AFD992BF2A1A300A2EF0B /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		1C3AFD9C2BF2AFC700A2EF0B /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		1C407D5B2C0F9A5E00C3F819 /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		1C61BF9F2BFB750E006B3572 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1C74A5312BEAAAFB00F2D24D /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		1C96B2CB2BEA318E00E471D1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				1C19BA062BFE653E00819ED6 /* ProfileService.swift */,
 				1C19BA0F2BFE9B1100819ED6 /* ProfileImageService.swift */,
 				1C96B2CB2BEA318E00E471D1 /* ProfileViewController.swift */,
+				1C407D5B2C0F9A5E00C3F819 /* ProfileLogoutService.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				1C74A5322BEAAAFB00F2D24D /* SingleImageViewController.swift in Sources */,
 				1C9AF59F2BF7DB0900C45CFB /* URLSession+data.swift in Sources */,
 				1CE515722C0CF011004764DE /* imageListServisce.swift in Sources */,
+				1C407D5C2C0F9A5E00C3F819 /* ProfileLogoutService.swift in Sources */,
 				1C19BA0C2BFE864A00819ED6 /* ProfileImage.swift in Sources */,
 				1C3AFD9D2BF2AFC700A2EF0B /* WebViewViewController.swift in Sources */,
 				1CEB2FBC2BF7C12100DDBE36 /* OAuth2Service.swift in Sources */,
