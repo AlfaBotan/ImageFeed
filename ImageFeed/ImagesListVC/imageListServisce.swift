@@ -28,7 +28,7 @@ final class ImagesListService {
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
             self.task = nil
-                
+            
             if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 guard 200 ..< 300 ~= statusCode else {
                     let errorMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
@@ -36,7 +36,7 @@ final class ImagesListService {
                     return
                 }
             }
-
+            
             if let error = error {
                 print("Error: \(error)")
                 return
@@ -60,7 +60,7 @@ final class ImagesListService {
                                 welcomeDescription: $0.description,
                                 thumbImageURL: $0.urls.thumb,
                                 fullImageURL: $0.urls.full,
-                                isLiked: $0.likedByUser, 
+                                isLiked: $0.likedByUser,
                                 regularImageURL: $0.urls.regular
                             )
                         )
@@ -80,16 +80,17 @@ final class ImagesListService {
     }
     
     private func getImagesListRequest(page: Int) -> URLRequest? {
+        guard let token = oAuth2TokenStorage.getStorageToken() else {return nil}
         var components = URLComponents(string: "https://api.unsplash.com/photos")
         components?.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "per_page", value: "10"),
-            URLQueryItem(name: "client_id", value: "UtikJ6aDHAwv8C_JVCEbQLQJ7ldEw_D3LVCSYvRfiyI")
+            URLQueryItem(name: "per_page", value: "10")
         ]
         
         guard let url = components?.url else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
     
@@ -102,5 +103,65 @@ final class ImagesListService {
     private func convertPhotoResult(photoResult: PhotoResult) -> Photo {
         let date = formatISODateString(photoResult.createdAt)
         return Photo(id: photoResult.id, size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)), createdAt: date, welcomeDescription: photoResult.description, thumbImageURL: photoResult.urls.thumb, fullImageURL: photoResult.urls.full, isLiked: photoResult.likedByUser, regularImageURL: photoResult.urls.regular)
+    }
+    
+     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+        var httpMethod: String
+        if !isLike {
+            httpMethod = "DELETE"
+        } else {
+            httpMethod = "POST"
+        }
+        guard let token = oAuth2TokenStorage.getStorageToken() else {return}
+        let urlString = "https://api.unsplash.com/photos/\(photoId)/like"
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "Не удалось собрать ссылку для лайка", code: 0, userInfo: nil)))
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else {return}
+            
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                guard 200 ..< 300 ~= statusCode else {
+                    let errorMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+                    print("[objectTask]: HTTP error - status code \(statusCode), message: \(errorMessage)")
+                    return
+                }
+            }
+            
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                let photo = self.photos[index]
+                let newPhoto = Photo(id: photo.id,
+                                     size: photo.size,
+                                     createdAt: photo.createdAt,
+                                     thumbImageURL: photo.thumbImageURL,
+                                     fullImageURL: photo.fullImageURL,
+                                     isLiked: isLike,
+                                     regularImageURL: photo.regularImageURL)
+                DispatchQueue.main.async {
+                    self.photos[index] = newPhoto
+                    NotificationCenter.default.post(
+                        name: ImagesListService.didChangeNotification,
+                        object: self,
+                        userInfo: ["photos": self.photos]
+                    )
+                    completion(.success(()))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "Photo not found", code: 0, userInfo: nil)))
+                }
+            }
+        }
+         task.resume()
     }
 }

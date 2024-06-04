@@ -69,15 +69,12 @@ final class ImagesListViewController: UIViewController {
                                     print("Изображение не загрузилось с ошибкой \(error)")
                                 }
                             }
-       //       guard let image = UIImage(named: photosName[indexPath.row]) else { return }
-       //       cell.photo.image = image
        if let date = photos[indexPath.row].createdAt {
            cell.dateLable.text = dateFormatter.string(from: date)
        } else {
            cell.dateLable.text = ""
        }
-       var likeImage = UIImage(named: indexPath.row % 2 == 0 ? "Active" : "No Active")
-       likeImage = UIImage(named: photos[indexPath.row].isLiked ? "Active" : "No Active")
+       let likeImage = UIImage(named: photos[indexPath.row].isLiked ? "Active" : "No Active")
        cell.likeButton.setImage(likeImage, for: .normal)
        tableView.reloadRows(at: [indexPath], with: .automatic)
    }
@@ -91,8 +88,11 @@ final class ImagesListViewController: UIViewController {
             assertionFailure("Invalid segue destination")
             return
         }
-            let image = UIImage(named: photosName[indexPath.row])
-            viewControler.image = image
+            let largeImageURL = photos[indexPath.row].fullImageURL
+            guard
+                let imageUrl = URL(string: largeImageURL)
+            else { return }
+            viewControler.fullImageURL = imageUrl
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -113,7 +113,7 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Не прошёл каст ячейки")
             return UITableViewCell()
         }
-        
+        imageListCell.delegate = self
         configCell(for: imageListCell, with: indexPath)
         
         return imageListCell
@@ -128,15 +128,12 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        guard let image = UIImage(named: photosName[indexPath.row]) else {
-//            return 0
-//        }
+
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = photos[indexPath.row].size.width
         let scale = imageViewWidth / imageWidth
         let cellHeight = photos[indexPath.row].size.height * scale + imageInsets.top + imageInsets.bottom
-//        cellHeight = photos[indexPath.row].size.height
         return cellHeight
     }
     
@@ -164,6 +161,32 @@ extension ImagesListViewController {
                 tableView.insertRows(at: indexPath, with: .automatic)
             } completion: { _ in }
         }
+    }
+}
+// MARK: - ImagesListCellDelegate
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else {return}
+        let photo = photos[indexPath.row]
+        
+        UIBlockingProgressHUD.show()
+        imageListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
+               switch result {
+               case .success:
+                  // Синхронизируем массив картинок с сервисом
+                  self.photos = self.imageListService.photos
+                  // Изменим индикацию лайка картинки
+                   cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                  // Уберём лоадер
+                  UIBlockingProgressHUD.dismiss()
+               case .failure:
+                  // Уберём лоадер
+                  UIBlockingProgressHUD.dismiss()
+                  // Покажем, что что-то пошло не так
+                  // TODO: Показать ошибку с использованием UIAlertController
+                  }
+               }
     }
 }
 
