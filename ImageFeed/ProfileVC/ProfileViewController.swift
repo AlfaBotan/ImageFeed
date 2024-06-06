@@ -11,7 +11,7 @@ import Kingfisher
 final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
-    
+    private let profileLogoutService = ProfileLogoutService.shared
     private lazy var profileImage = UIImageView()
     private lazy var nameLable = UILabel()
     private lazy var loginNameLabel = UILabel()
@@ -109,6 +109,7 @@ final class ProfileViewController: UIViewController {
     private func addExitButton(){
         exitbutton.setImage(UIImage(named: "Exit"), for: .normal)
         exitbutton.translatesAutoresizingMaskIntoConstraints = false
+        exitbutton.addTarget(self, action: #selector(exitFromProfile), for: .touchUpInside)
         view.addSubview(exitbutton)
         
         NSLayoutConstraint.activate([
@@ -151,4 +152,17 @@ final class ProfileViewController: UIViewController {
                                   }
                               }
        }
+    
+    @objc
+    func exitFromProfile() {
+        let alert = UIAlertController(title: "Предупреждение", message: "Вы собираетесь выйти из личного кабинета?", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Не надо", style: .cancel) { action in }
+        let actionTwo = UIAlertAction(title: "Да выйти", style: .default) { [weak self] _ in
+            guard let self = self else {return}
+            profileLogoutService.logout()
+        }
+        alert.addAction(action)
+        alert.addAction(actionTwo)
+        present(alert, animated: true)
+    }
 }

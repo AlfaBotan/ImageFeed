@@ -169,24 +169,26 @@ extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else {return}
         let photo = photos[indexPath.row]
-        
         UIBlockingProgressHUD.show()
-        imageListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
-               switch result {
-               case .success:
-                  // Синхронизируем массив картинок с сервисом
-                  self.photos = self.imageListService.photos
-                  // Изменим индикацию лайка картинки
-                   cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
-                  // Уберём лоадер
-                  UIBlockingProgressHUD.dismiss()
-               case .failure:
-                  // Уберём лоадер
-                  UIBlockingProgressHUD.dismiss()
-                  // Покажем, что что-то пошло не так
-                  // TODO: Показать ошибку с использованием UIAlertController
-                  }
-               }
+        imageListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] result in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                   switch result {
+                   case .success:
+                      self.photos = self.imageListService.photos
+                       cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                   case .failure(let error):
+                       self.showErrorAlert(error: error)
+                      }
+            }
+        }
+    }
+    
+    private func showErrorAlert(error: Error) {
+        let alert = UIAlertController(title: "Error", message: "Ошибка при попытке изменить состояние лайка: \(error.localizedDescription)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
     }
 }
 

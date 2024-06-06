@@ -37,5 +37,11 @@ final class ProfileLogoutService {
          imageListService.removeData()
          tokenStorage.removeToken()
          
+         guard let window = UIApplication.shared.windows.first else {
+             assertionFailure("Invalid window configuration")
+             return
+         }
+         let splashViewController = SplashViewController()
+         window.rootViewController = splashViewController
      }
 }

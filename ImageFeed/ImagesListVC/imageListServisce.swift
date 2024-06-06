@@ -80,14 +80,19 @@ final class ImagesListService {
     }
     
     private func getImagesListRequest(page: Int) -> URLRequest? {
-        guard let token = oAuth2TokenStorage.getStorageToken() else {return nil}
+        guard let token = oAuth2TokenStorage.getStorageToken() else {
+            return nil
+        }
         var components = URLComponents(string: "https://api.unsplash.com/photos")
         components?.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "per_page", value: "10")
         ]
         
-        guard let url = components?.url else { return nil }
+        guard let url = components?.url else {
+            print("Не удалось собрать URL для запроса списка картинок")
+            return nil
+        }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -133,11 +138,6 @@ final class ImagesListService {
                 }
             }
             
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
-            
             if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                 let photo = self.photos[index]
                 let newPhoto = Photo(id: photo.id,
@@ -158,6 +158,7 @@ final class ImagesListService {
                 }
             } else {
                 DispatchQueue.main.async {
+                    print("Не удалось выполнить запрос для смены состония LikeButton")
                     completion(.failure(NSError(domain: "Photo not found", code: 0, userInfo: nil)))
                 }
             }

@@ -38,19 +38,17 @@ final class WebViewViewController: UIViewController {
             print("не удалось создать urlComponents из WebViewConstants.unsplashAuthorizeURLString")
             return
         }
-
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
-
+        
         guard let url = urlComponents.url else {
             print("не удалось создать url из urlComponents")
             return
         }
-
         let request = URLRequest(url: url)
         webView.load(request)
     }
