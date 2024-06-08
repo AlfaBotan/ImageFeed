@@ -74,6 +74,7 @@ final class ImagesListService {
                 }
             } catch {
                 print("Error decoding JSON: \(error)")
+                
             }
         }
         task?.resume()
@@ -130,12 +131,18 @@ final class ImagesListService {
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else {return}
             
+            
             if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 guard 200 ..< 300 ~= statusCode else {
                     let errorMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
                     print("[objectTask]: HTTP error - status code \(statusCode), message: \(errorMessage)")
+                    completion(.failure(NSError(domain: "Ошибка 404", code: 0, userInfo: nil)))
                     return
                 }
+            }
+            
+            if let error = error {
+                completion(.failure(error))
             }
             
             if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
@@ -162,7 +169,7 @@ final class ImagesListService {
                     completion(.failure(NSError(domain: "Photo not found", code: 0, userInfo: nil)))
                 }
             }
-        }
+       }
          task.resume()
     }
     
