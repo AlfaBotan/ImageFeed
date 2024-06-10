@@ -21,7 +21,7 @@ final class OAuth2TokenStorage {
             guard let token: String = KeychainWrapper.standard.string(forKey: "Auth token") else {
                 return ""
             }
-           return token
+            return token
         }
         
         set {
@@ -46,5 +46,10 @@ final class OAuth2TokenStorage {
         }
         print("Из Keychain взят токен")
         return storageToken
+    }
+    
+    func removeToken() {
+        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "Auth token")
+        print("removeSuccessful \(removeSuccessful)")
     }
 }

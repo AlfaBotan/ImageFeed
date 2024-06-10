@@ -15,9 +15,6 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "Auth token")
-        print("removeSuccessful \(removeSuccessful)")
         configurationUI()
     }
     
@@ -36,7 +33,6 @@ final class SplashViewController: UIViewController {
                   SplashViewController  viewDidAppear
                   нет токена
                   SplashViewController  viewDidAppear
-
                   """)
             switchToAuthViewController()
         }
@@ -66,7 +62,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                     switch result {
                     case .success(let string):
                         print("""
-                                      func fetchProfile(token: String)
+                                  func fetchProfile(token: String)
                               \(string)
                                   func fetchProfile(token: String)
                               """)
@@ -86,7 +82,7 @@ extension SplashViewController: AuthViewControllerDelegate {
 extension SplashViewController {
     private func switchToAuthViewController() {
         guard let authViewController = UIStoryboard(name: "Main", bundle: .main)
-                .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
+            .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
             print("Не удалось создать AuthViewController")
             fatalError("Invalid Configuration")
         }
@@ -96,17 +92,12 @@ extension SplashViewController {
     }
     
     private func switchToTabBarController() {
-        // Получаем экземпляр `window` приложения
         guard let window = UIApplication.shared.windows.first else {
             assertionFailure("Invalid window configuration")
             return
         }
-        
-        // Создаём экземпляр нужного контроллера из Storyboard с помощью ранее заданного идентификатора
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
-           
-        // Установим в `rootViewController` полученный контроллер
         window.rootViewController = tabBarController
     }
 }

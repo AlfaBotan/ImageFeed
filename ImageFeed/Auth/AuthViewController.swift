@@ -11,7 +11,7 @@ import ProgressHUD
 
 final class AuthViewController: UIViewController {
     weak var delegate: AuthViewControllerDelegate?
-
+    
     private let showWebViewSegueIdentifier = "ShowWebView"
     private let webViewVC = WebViewViewController()
     private let oAuth2TokenStorage = OAuth2TokenStorage()
@@ -19,7 +19,7 @@ final class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureBackButton()
+        //        configureBackButton()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -30,19 +30,19 @@ final class AuthViewController: UIViewController {
                 assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
                 print("Failed to prepare for \(showWebViewSegueIdentifier)")
                 return
-                 }
+            }
             webViewVC.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
     
-//  private func configureBackButton() {
-//       navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Backward")
-//       navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Backward")
-//       navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-//       navigationItem.backBarButtonItem?.tintColor = .ypBlack
-//    }
+    //  private func configureBackButton() {
+    //       navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Backward")
+    //       navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Backward")
+    //       navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    //       navigationItem.backBarButtonItem?.tintColor = .ypBlack
+    //    }
     
     
     
@@ -60,7 +60,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
         OAuth2Service.shared.fetchOAuthToken(code: code) { [weak self] result in
             guard let self = self else {return}
             UIBlockingProgressHUD.dismiss()
-
+            
             switch result {
             case .success(let token):
                 print("""

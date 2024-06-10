@@ -24,43 +24,42 @@ final class OAuth2Service {
         guard
             let baseURL = URL(string: "https://unsplash.com")
         else { print("Fail create baseURL for OAuthTokenRequest")
-               return nil
+            return nil
         }
         guard
-         let url = URL(
-             string: "/oauth/token"
-             + "?client_id=\(Constants.accessKey)"
-             + "&&client_secret=\(Constants.secretKey)"
-             + "&&redirect_uri=\(Constants.redirectURI)"
-             + "&&code=\(code)"
-             + "&&grant_type=authorization_code",
-             relativeTo: baseURL
-         )
+            let url = URL(
+                string: "/oauth/token"
+                + "?client_id=\(Constants.accessKey)"
+                + "&&client_secret=\(Constants.secretKey)"
+                + "&&redirect_uri=\(Constants.redirectURI)"
+                + "&&code=\(code)"
+                + "&&grant_type=authorization_code",
+                relativeTo: baseURL
+            )
         else {
             print("Fail create URL for OAuthTokenRequest")
             return nil
         }
-         var request = URLRequest(url: url)
-         request.httpMethod = "POST"
-         return request
-     }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        return request
+    }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-            assert(Thread.isMainThread)
+        assert(Thread.isMainThread)
         guard lastCode != code else {
-                   completion(.failure(AuthServiceError.invalidRequest))
-                   return
-               }
-
-               task?.cancel()
-               lastCode = code
-            guard
-                let request = makeOAuthTokenRequest(code: code)
-            else {
-                completion(.failure(AuthServiceError.invalidRequest))
-                return
-            }
-
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        task?.cancel()
+        lastCode = code
+        guard
+            let request = makeOAuthTokenRequest(code: code)
+        else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -75,9 +74,7 @@ final class OAuth2Service {
                 self.lastCode = nil
             }
         }
-        
-            self.task = task
-            task.resume()
-        }
-    
+        self.task = task
+        task.resume()
+    }
 }

@@ -6,34 +6,44 @@
 //
 
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     
-    var image: UIImage? {
-        didSet {
-            guard isViewLoaded, let image else { return }
-
-            imageView.image = image
-            imageView.frame.size = image.size
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
+    var fullImageURL: URL?
     
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var sharingButton: UIButton!
     @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet  weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        guard let image else { return }
-        imageView.image = image
-        imageView.frame.size = image.size
-        rescaleAndCenterImageInScrollView(image: image)
+        if let imageURL = fullImageURL {
+            
+            UIBlockingProgressHUD.show()
+            imageView.kf.setImage(with: imageURL,
+                                  placeholder: UIImage(named: "DownloadImage"),
+                                  options: nil) { [weak self] result in
+                guard let self = self else {return}
+                UIBlockingProgressHUD.dismiss()
+                switch result {
+                case .success(let value):
+                    
+                    self.imageView.frame.size = value.image.size
+                    self.imageView.contentMode = .scaleAspectFit
+                    self.rescaleAndCenterImageInScrollView(image: value.image)
+                case .failure(let error):
+                    print("Изображение не загрузилось с ошибкой \(error)")
+                    self.showError()
+                }
+            }
+        }
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
@@ -54,7 +64,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     @IBAction private func didTapShareButton() {
-        guard let image else { return }
+        guard let image = imageView.image else { return }
         let share = UIActivityViewController(
             activityItems: [image],
             applicationActivities: nil
@@ -69,5 +79,29 @@ final class SingleImageViewController: UIViewController {
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
+    }
+    
+    private func showError() {
+        let alert = UIAlertController(title: "Ошибка", message: "Что-то пошло не так. Попробовать ещё раз?", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Не надо", style: .cancel) { action in }
+        let actionTwo = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            guard let self = self else {return}
+            imageView.kf.setImage(with: self.fullImageURL,
+                                  placeholder: UIImage(named: "DownloadImage"),
+                                  options: nil) { [weak self] result in
+                
+                switch result {
+                case .success(let value):
+                    self?.imageView.frame.size = value.image.size
+                    self?.rescaleAndCenterImageInScrollView(image: value.image)
+                case .failure(let error):
+                    print("Изображение не загрузилось с ошибкой \(error)")
+                    self?.showError()
+                }
+            }
+        }
+        alert.addAction(action)
+        alert.addAction(actionTwo)
+        present(alert, animated: true)
     }
 }
