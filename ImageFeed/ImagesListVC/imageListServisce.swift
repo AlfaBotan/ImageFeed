@@ -12,6 +12,7 @@ final class ImagesListService {
     private (set) var photos: [Photo] = []
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     private var lastLoadedPage = 1
+    private let formatter = ISO8601DateFormatter()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     static let shared = ImagesListService()
@@ -102,7 +103,6 @@ final class ImagesListService {
     
     private func formatISODateString(_ dateString: String?) -> Date? {
         guard let dateString = dateString else { return nil }
-        let formatter = ISO8601DateFormatter()
         return formatter.date(from: dateString)
     }
     

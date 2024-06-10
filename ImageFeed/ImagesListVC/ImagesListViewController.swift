@@ -50,9 +50,9 @@ final class ImagesListViewController: UIViewController {
           \(imageUrl)
           ссылка готова, центр уведомлений отработал
           """)
-       let cache = ImageCache.default
-       cache.clearMemoryCache()
-       cache.clearDiskCache()
+//       let cache = ImageCache.default
+//       cache.clearMemoryCache()
+//       cache.clearDiskCache()
        cell.photo.kf.indicatorType = .activity
        cell.photo.kf.setImage(with: imageUrl,
                                placeholder: UIImage(named: "DownloadImage"),
