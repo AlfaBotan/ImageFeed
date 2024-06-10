@@ -111,7 +111,7 @@ final class ImagesListService {
         return Photo(id: photoResult.id, size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)), createdAt: date, welcomeDescription: photoResult.description, thumbImageURL: photoResult.urls.thumb, fullImageURL: photoResult.urls.full, isLiked: photoResult.likedByUser, regularImageURL: photoResult.urls.regular)
     }
     
-     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         var httpMethod: String
         if !isLike {
             httpMethod = "DELETE"
@@ -169,8 +169,8 @@ final class ImagesListService {
                     completion(.failure(NSError(domain: "Photo not found", code: 0, userInfo: nil)))
                 }
             }
-       }
-         task.resume()
+        }
+        task.resume()
     }
     
     func removeData() {

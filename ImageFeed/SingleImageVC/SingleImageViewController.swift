@@ -12,7 +12,7 @@ import ProgressHUD
 final class SingleImageViewController: UIViewController {
     
     var fullImageURL: URL?
-        
+    
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var sharingButton: UIButton!
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -20,7 +20,7 @@ final class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
@@ -28,21 +28,21 @@ final class SingleImageViewController: UIViewController {
             
             UIBlockingProgressHUD.show()
             imageView.kf.setImage(with: imageURL,
-                                 placeholder: UIImage(named: "DownloadImage"),
+                                  placeholder: UIImage(named: "DownloadImage"),
                                   options: nil) { [weak self] result in
-                                guard let self = self else {return}
-                                    UIBlockingProgressHUD.dismiss()
-                                  switch result {
-                                  case .success(let value):
-                                      
-                                      self.imageView.frame.size = value.image.size
-                                      self.imageView.contentMode = .scaleAspectFit
-                                      self.rescaleAndCenterImageInScrollView(image: value.image)
-                                  case .failure(let error):
-                                      print("Изображение не загрузилось с ошибкой \(error)")
-                                      self.showError()
-                                  }
-                              }
+                guard let self = self else {return}
+                UIBlockingProgressHUD.dismiss()
+                switch result {
+                case .success(let value):
+                    
+                    self.imageView.frame.size = value.image.size
+                    self.imageView.contentMode = .scaleAspectFit
+                    self.rescaleAndCenterImageInScrollView(image: value.image)
+                case .failure(let error):
+                    print("Изображение не загрузилось с ошибкой \(error)")
+                    self.showError()
+                }
+            }
         }
     }
     

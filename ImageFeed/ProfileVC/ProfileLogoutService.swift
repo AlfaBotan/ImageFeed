@@ -20,28 +20,28 @@ final class ProfileLogoutService {
     
     func logout() {
         cleanCookies()
-     }
-
-     private func cleanCookies() {
+    }
+    
+    private func cleanCookies() {
         // Очищаем все куки из хранилища
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         // Запрашиваем все данные из локального хранилища
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-           // Массив полученных записей удаляем из хранилища
-           records.forEach { record in
-              WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-           }
+            // Массив полученных записей удаляем из хранилища
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
         }
-         profileService.removeData()
-         profileImageService.removeData()
-         imageListService.removeData()
-         tokenStorage.removeToken()
-         
-         guard let window = UIApplication.shared.windows.first else {
-             assertionFailure("Invalid window configuration")
-             return
-         }
-         let splashViewController = SplashViewController()
-         window.rootViewController = splashViewController
-     }
+        profileService.removeData()
+        profileImageService.removeData()
+        imageListService.removeData()
+        tokenStorage.removeToken()
+        
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("Invalid window configuration")
+            return
+        }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
+    }
 }

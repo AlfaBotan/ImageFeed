@@ -27,12 +27,12 @@ final class ImagesListCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-            super.prepareForReuse()
+        super.prepareForReuse()
         photo.kf.cancelDownloadTask()
         photo.image = nil
-        }
+    }
     
-     func setIsLiked(isLiked: Bool) {
+    func setIsLiked(isLiked: Bool) {
         let likeImage = UIImage(named: isLiked ? "Active" : "No Active")
         likeButton.setImage(likeImage, for: .normal)
     }

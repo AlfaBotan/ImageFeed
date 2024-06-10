@@ -82,7 +82,7 @@ extension SplashViewController: AuthViewControllerDelegate {
 extension SplashViewController {
     private func switchToAuthViewController() {
         guard let authViewController = UIStoryboard(name: "Main", bundle: .main)
-                .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
+            .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
             print("Не удалось создать AuthViewController")
             fatalError("Invalid Configuration")
         }

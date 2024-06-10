@@ -30,14 +30,14 @@ final class ProfileViewController: UIViewController {
         installNewValueForLables()
         
         profileImageServiceObserver = NotificationCenter.default
-                    .addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                        object: nil,
-                        queue: .main
-                    ) { [weak self] _ in
-                        guard let self = self else { return }
-                        self.updateAvatar()
-                    }
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
         updateAvatar()
     }
     
@@ -121,10 +121,10 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateAvatar() {
-           guard
-               let profileImageURL = ProfileImageService.shared.avatarURL,
-               let imageUrl = URL(string: profileImageURL)
-           else { return }
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let imageUrl = URL(string: profileImageURL)
+        else { return }
         print("""
               ссылка готова, центр уведомлений отработал
               \(imageUrl)
@@ -139,19 +139,19 @@ final class ProfileViewController: UIViewController {
         profileImage.kf.setImage(with: imageUrl,
                                  placeholder: UIImage(named: "person.crop.circle.fill"),
                                  options: [.processor(processor)]) { result in
-                                  
-                                  switch result {
-                                // Успешная загрузка
-                                  case .success(let value):
-                                      // Картинка
-                                      print(value.image)
-                                      // Информация об источнике.
-                                      print(value.source)
-                                  case .failure(let error):
-                                      print("Изображение не загрузилось с ошибкой \(error)")
-                                  }
-                              }
-       }
+            
+            switch result {
+                // Успешная загрузка
+            case .success(let value):
+                // Картинка
+                print(value.image)
+                // Информация об источнике.
+                print(value.source)
+            case .failure(let error):
+                print("Изображение не загрузилось с ошибкой \(error)")
+            }
+        }
+    }
     
     @objc
     func exitFromProfile() {

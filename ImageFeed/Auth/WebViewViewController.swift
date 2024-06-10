@@ -55,12 +55,12 @@ final class WebViewViewController: UIViewController {
     
     private func startObserveOnLoadProgress() {
         estimatedProgressObservation = webView.observe(
-                    \.estimatedProgress,
-                     options: [.new],
-                    changeHandler: { [weak self] _, _ in
-                        guard let self = self else { return }
-                        self.updateProgress()
-                    })
+            \.estimatedProgress,
+             options: [.new],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
     }
     
     private func updateProgress() {
@@ -80,28 +80,28 @@ extension WebViewViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-         if let code = code(from: navigationAction) {
-             print("CODE Acces")
-             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
-             decisionHandler(.cancel)
-          } else {
-              print("CODE NOT Acces")
-                decisionHandler(.allow)
-          }
+        if let code = code(from: navigationAction) {
+            print("CODE Acces")
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            decisionHandler(.cancel)
+        } else {
+            print("CODE NOT Acces")
+            decisionHandler(.allow)
+        }
     }
     
-     func code(from navigationAction: WKNavigationAction) -> String? {
-         if
-               let url = navigationAction.request.url,                         
-               let urlComponents = URLComponents(string: url.absoluteString),
-               urlComponents.path == "/oauth/authorize/native",
-               let items = urlComponents.queryItems,
-               let codeItem = items.first(where: { $0.name == "code" })
-           {
-               return codeItem.value
-           } else {
-               return nil
-           }
+    func code(from navigationAction: WKNavigationAction) -> String? {
+        if
+            let url = navigationAction.request.url,                         
+                let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" })
+        {
+            return codeItem.value
+        } else {
+            return nil
+        }
     }
 }
 
