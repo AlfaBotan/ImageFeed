@@ -56,7 +56,7 @@ final class ImagesListViewController: UIViewController {
                                options: nil) { result in
             
             switch result {
-            case .success(let value):
+            case .success(_):
                 print("Изображение загружено")
             case .failure(let error):
                 print("Изображение не загрузилось с ошибкой \(error)")

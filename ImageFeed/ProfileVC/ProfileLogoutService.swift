@@ -7,6 +7,7 @@
 
 import Foundation
 import WebKit
+import Kingfisher
 
 final class ProfileLogoutService {
     private let tokenStorage = OAuth2TokenStorage()
@@ -37,6 +38,9 @@ final class ProfileLogoutService {
         imageListService.removeData()
         tokenStorage.removeToken()
         
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
         guard let window = UIApplication.shared.windows.first else {
             assertionFailure("Invalid window configuration")
             return

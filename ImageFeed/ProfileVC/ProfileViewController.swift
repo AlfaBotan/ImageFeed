@@ -126,9 +126,9 @@ final class ProfileViewController: UIViewController {
             let imageUrl = URL(string: profileImageURL)
         else { return }
         print("""
-              ссылка готова, центр уведомлений отработал
+              ссылка на картинку для фото профиля готова, центр уведомлений отработал
               \(imageUrl)
-              ссылка готова, центр уведомлений отработал
+              ссылка на картинку для фото профиля готова, центр уведомлений отработал
               """)
         
         let cache = ImageCache.default
