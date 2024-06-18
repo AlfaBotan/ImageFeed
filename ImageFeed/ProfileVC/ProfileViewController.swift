@@ -96,6 +96,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         exitbutton.setImage(UIImage(named: "Exit"), for: .normal)
         exitbutton.translatesAutoresizingMaskIntoConstraints = false
         exitbutton.addTarget(self, action: #selector(exitFromProfile), for: .touchUpInside)
+        exitbutton.accessibilityIdentifier = "logout button"
         view.addSubview(exitbutton)
         
         NSLayoutConstraint.activate([
@@ -114,7 +115,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         addExitButton()
     }
     
-    internal func installNewValueForLables(bio: String, name: String, loginName: String) {
+     func installNewValueForLables(bio: String, name: String, loginName: String) {
         statusLable.text = bio
         nameLable.text = name
         loginNameLabel.text = loginName
@@ -129,8 +130,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         profileImage.image = image
     }
     
-    
-    
     @objc
     func exitFromProfile() {
         let alert = UIAlertController(title: "Предупреждение", message: "Вы собираетесь выйти из личного кабинета?", preferredStyle: .alert)
@@ -144,7 +143,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         present(alert, animated: true)
     }
     
-    func configure(_ presenter: ProfilePresenterProtocol) {
+    func configureProfile(_ presenter: ProfilePresenterProtocol) {
             self.presenter = presenter
             presenter.view = self
         }

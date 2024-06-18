@@ -8,12 +8,12 @@
 import UIKit
 import Kingfisher
 
- protocol ImageListPresenterProtocol: AnyObject {
+public protocol ImageListPresenterProtocol: AnyObject {
      var view: ImagesListViewControllerProtocol? { get set }
+     var photos: [Photo] { get set }
      func configCell(for cell: ImagesListCell, with indexPath: IndexPath)
      func updateTableView(tableView: UITableView)
      func viewDidLoad()
-     var photos: [Photo] { get set }
      func prepare(for segue: UIStoryboardSegue, sender: Any?)
      func tableViewWillDisplay(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
      func tableViewHeightForRowAtIndexPath(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -21,13 +21,12 @@ import Kingfisher
 }
 
 final class ImageListPresenter: ImageListPresenterProtocol {
-    
-    private let showSingleImageSegueIdentifire = "ShowSingleImage"
+    weak var tableView: UITableView?
     var view: (any ImagesListViewControllerProtocol)?
+    var photos: [Photo] = []
+    private let showSingleImageSegueIdentifire = "ShowSingleImage"
     private let imageListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
-    weak var tableView: UITableView?
-    internal var photos: [Photo] = []
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -41,7 +40,7 @@ final class ImageListPresenter: ImageListPresenterProtocol {
         imageListService.fetchPhotosNextPage()
     }
     
-    func registerForNotifications() {
+    private func registerForNotifications() {
         imageListServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.didChangeNotification,
             object: nil,
@@ -74,6 +73,7 @@ final class ImageListPresenter: ImageListPresenterProtocol {
                 print("Изображение не загрузилось с ошибкой \(error)")
             }
         }
+        
         if let date = photos[indexPath.row].createdAt {
             cell.dateLable.text = dateFormatter.string(from: date)
         } else {
@@ -117,7 +117,8 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     
      func tableViewWillDisplay(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
          let lastIndexPath = photos.count - 1
-         if indexPath.row == lastIndexPath {
+         if indexPath.row == lastIndexPath &&
+            !ProcessInfo.processInfo.arguments.contains("UITEST") {
              imageListService.fetchPhotosNextPage()
          }
     }

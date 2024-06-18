@@ -6,8 +6,11 @@
 //
 
 import UIKit
+public protocol ImagesListServiceProtocol: AnyObject {
+    func fetchPhotosNextPage()
+}
 
-final class ImagesListService {
+final class ImagesListService: ImagesListServiceProtocol {
     private var task: URLSessionTask?
     private (set) var photos: [Photo] = []
     private let oAuth2TokenStorage = OAuth2TokenStorage()

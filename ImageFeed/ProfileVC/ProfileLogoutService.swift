@@ -9,7 +9,11 @@ import Foundation
 import WebKit
 import Kingfisher
 
-final class ProfileLogoutService {
+public protocol ProfileLogoutServiceProtocol: AnyObject {
+    func logout()
+}
+
+final class ProfileLogoutService: ProfileLogoutServiceProtocol {
     private let tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared

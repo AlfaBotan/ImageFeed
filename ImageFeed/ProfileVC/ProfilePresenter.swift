@@ -41,10 +41,16 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             print("Profile not have value")
             return
         }
-        view?.installNewValueForLables(bio: profile.bio!, name: profile.name!, loginName: profile.loginName!)
+        guard let bio = profile.bio,
+              let name = profile.name,
+              let loginName = profile.loginName
+        else {
+            return
+        }
+        view?.installNewValueForLables(bio: bio, name: name, loginName: loginName)
     }
     
-     func updateAvatar() {
+    internal func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let imageUrl = URL(string: profileImageURL)
@@ -63,8 +69,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
                 print("Ошибка при загрузке аватарки: \(error.localizedDescription)")
             }
         }
-//        profileImage.kf.indicatorType = .activity
-//        profileImage.kf.setImage(with: imageUrl)
     }
     
      func LogoutProfile() {
