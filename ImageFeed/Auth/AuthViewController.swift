@@ -16,12 +16,6 @@ final class AuthViewController: UIViewController {
     private let webViewVC = WebViewViewController()
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //        configureBackButton()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showWebViewSegueIdentifier {
             guard
@@ -31,20 +25,15 @@ final class AuthViewController: UIViewController {
                 print("Failed to prepare for \(showWebViewSegueIdentifier)")
                 return
             }
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewVC.presenter = webViewPresenter
+            webViewPresenter.view = webViewVC
             webViewVC.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    //  private func configureBackButton() {
-    //       navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Backward")
-    //       navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Backward")
-    //       navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    //       navigationItem.backBarButtonItem?.tintColor = .ypBlack
-    //    }
-    
-    
     
     private func showAlert() {
         let alert = UIAlertController(title: "Что-то пошло не так(", message: "Не удалось войти в систему", preferredStyle: .alert)
